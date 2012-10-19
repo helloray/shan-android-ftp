@@ -1,0 +1,88 @@
+<!--
+ <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_ll_all"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ffffff"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <!-- 提示用户 -->
+
+    <RelativeLayout
+        android:id="@+id/main_ll_notify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFE4B5"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/main_tv_notify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:textColor="#FF0000"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/main_btn_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_toRightOf="@+id/main_tv_notify"
+            android:text="@string/main_notify_refresh" />
+    </RelativeLayout>
+
+    <!-- 一键同步，即联系人、短信、本地所有图片 -->
+
+    <Button
+        android:id="@+id/main_btn_upload_onekey"
+        style="@style/main_btn_style"
+        android:text="@string/main_upload_onekey" />
+
+    <!-- 同步图片 -->
+
+    <Button
+        android:id="@+id/main_btn_upload_pic"
+        style="@style/main_btn_style"
+        android:text="@string/main_upload_pic" />
+
+    <!-- 同步联系人 -->
+
+    <Button
+        android:id="@+id/main_btn_upload_contact"
+        style="@style/main_btn_style"
+        android:text="@string/main_upload_contact" />
+
+    <!-- 同步短信 -->
+
+    <Button
+        android:id="@+id/main_btn_upload_sms"
+        style="@style/main_btn_style"
+        android:text="@string/main_upload_sms" />
+
+    <!-- 上传本地其他文件 -->
+
+    <Button
+        android:id="@+id/main_btn_upload_files"
+        style="@style/main_btn_style"
+        android:text="@string/main_upload_files" />
+
+    <!-- 网盘管理 -->
+
+    <Button
+        android:id="@+id/main_btn_upload_disc"
+        style="@style/main_btn_style"
+        android:text="@string/main_disc" />
+
+</LinearLayout><!-- </ScrollView> -->
