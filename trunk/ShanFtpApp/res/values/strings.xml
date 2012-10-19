@@ -1,0 +1,30 @@
+<resources>
+
+    <string name="app_name">ShanFtpApp</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="index_search">自动搜索</string>
+    <string name="index_input">手动输入</string>
+    <string name="main_notify_refresh">重试</string>
+    <string name="main_notify_info">Ftp服务器不可用，可能原因：\n 1、您的终端没有联网  \n 2、FTP服务器没有开启</string>
+    <string name="main_upload_onekey">一键同步</string>
+    <string name="main_upload_pic">同步所有图片</string>
+    <string name="main_upload_contact">同步联系人</string>
+    <string name="main_upload_sms">同步短信</string>
+    <string name="main_upload_files">上传文件</string>
+    <string name="main_disc">网盘管理</string>
+    
+    <string name="common_back">返回</string>
+    <string name="common_cancel">取消</string>
+    <string name="common_ok">确定</string>
+    <string name="common_checkall">全选</string>
+    <string name="common_checkReverse">反选</string>
+    <string name="disc_title">网盘管理</string>
+    <string name="disc_download">下载</string>
+    
+    <string name="disc_item_name">文件名</string>
+    <string name="disc_item_time">2012-9-29 10:32</string>
+    <string name="disc_item_size">19.8MB</string>
+
+</resources>

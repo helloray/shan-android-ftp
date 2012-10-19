@@ -1,0 +1,119 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/disc_ll_all"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ffffff"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <!-- Titlebar布局 -->
+
+    <RelativeLayout
+        android:id="@+id/disc_rl_titlebar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical" 
+        android:background="#FFFAFA"
+        android:padding="10dp">
+
+        <!-- 返回 -->
+
+        <Button
+            android:id="@+id/disc_btn_back"
+            style="@style/common_btn_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:text="@string/common_back" />
+        
+        <!-- Title -->
+
+        <TextView
+            android:id="@+id/disc_tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/disc_btn_back"
+            android:layout_toLeftOf="@+id/disc_btn_download"
+            android:layout_marginLeft="5dp"
+            android:ellipsize="middle"
+            android:singleLine="true"
+            android:text="@string/disc_title" 
+            android:textColor="#CD2626"
+            android:textSize="20sp"/>
+
+        <!-- 下载 -->
+
+        <Button
+            android:id="@+id/disc_btn_download"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:text="@string/disc_download" 
+            style="@style/common_btn_style"/>
+    </RelativeLayout>
+    
+    <!-- 列表布局 -->
+
+    <ListView
+        android:id="@+id/disc_listview"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:cacheColorHint="#00000000"
+        android:divider="@drawable/disc_listview_divider"
+        android:fadingEdge="none"
+        android:scrollbars="none" />
+    
+    <!-- 底部布局 -->
+
+    <RelativeLayout
+        android:id="@+id/disc_rl_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFAF0"
+        android:gravity="center_vertical" 
+        android:padding="10dp"
+        android:visibility="gone">
+
+        <!-- 全选 -->
+
+        <Button
+            android:id="@+id/disc_btn_bottom_allcheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:text="@string/common_checkall"
+            style="@style/common_btn_style"/>
+        
+         <!-- 确定 -->
+
+        <Button
+            android:id="@+id/disc_btn_bottom_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:text="@string/common_ok"
+            style="@style/common_btn_style"/>
+        
+        <!-- 反选 -->
+
+        <Button
+            android:id="@+id/disc_btn_bottom_nocheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:text="@string/common_checkReverse"
+            style="@style/common_btn_style" />
+        
+       
+    </RelativeLayout>
+    
+
+</LinearLayout>
