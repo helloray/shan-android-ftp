@@ -3,19 +3,20 @@ package com.shanzha.ftp.observer;
 import java.io.IOException;
 import java.util.Stack;
 
+import android.content.Context;
+import android.os.FileObserver;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
+
 import com.shanzha.ftp.core.FTPManager;
 import com.shanzha.ftp.core.FtpApp;
 import com.shanzha.ftp.dao.FTPDBService;
-import com.shanzha.ftp.inter.IFTPBaseListener;
 import com.shanzha.ftp.inter.IFTPDataListener;
 import com.shanzha.ftp.model.Record;
 import com.shanzha.ftp.util.Constant;
 import com.shanzha.ftp.util.FileUtil;
 import com.shanzha.ftp.util.StringUtil;
-
-import android.content.Context;
-import android.os.FileObserver;
-import android.util.Log;
 
 
 /**
@@ -68,7 +69,7 @@ public class FtpFileObserver extends FileObserver implements IFTPDataListener{
 				record.setTime(StringUtil.formatDate(System.currentTimeMillis(), 
 						"yyyy-MM--dd hh:mm"));
 				mCache.push(record);
-				
+				upload();
 			}
 			break;
 //		case FileObserver.ACCESS:
@@ -79,15 +80,16 @@ public class FtpFileObserver extends FileObserver implements IFTPDataListener{
 			break;
 		}
 	}
+	
+	/**
+	 * 一个一个上传
+	 */
 	private void upload()
 	{
-		if(!isUploading)
+		Log.i(TAG,"upload() isUploading = "+isUploading+" prepare size = "+mCache.size());
+		if(!isUploading&&mCache.size()>0)
 		{
 			Record record = mCache.pop();
-			if(null==record)
-			{
-				return;
-			}
 			mCurrRecord = record;
 			isUploading = true;
 			try {
@@ -102,37 +104,70 @@ public class FtpFileObserver extends FileObserver implements IFTPDataListener{
 	@Override
 	public void onRequestFtpDataStart(int type) {
 		// TODO Auto-generated method stub
-		 
-		Log.i(TAG,"实时备份照片--开始");
+		mHandler.sendEmptyMessage(Constant.MSG_UPLOAD_START);
 		 
 	}
 
 	@Override
 	public void onRequestFtpDataError(String errorMsg, int type) {
 		// TODO Auto-generated method stub
-		Log.i(TAG,"实时备份照片--出错"+errorMsg);
-		isUploading = false;
-		upload();
+		mHandler.sendEmptyMessage(Constant.MSG_UPLOAD_ERROR);
 	}
 
 	@Override
 	public void onRequestFtpDataTransfered(int transeredLength, int type) {
 		// TODO Auto-generated method stub
+		//暂时不用关心上传多少(transeredLength：指每次上传的长度，总上传的长度自己控制)
+//		Message msg = mHandler.obtainMessage();
+//		msg.what = Constant.MSG_UPLOAD_TRANSFERED;
+//		msg.obj = transeredLength;
+//		msg.sendToTarget();
 	}
 
 	@Override
 	public void onRequestFtpDataCompleted(int type) {
 		// TODO Auto-generated method stub
-		Log.i(TAG,"实时备份照片--完成");
-		//放入待上传内存集合(已经备份过，不用再放入内存) 
-//		FtpApp.getInstance().getmLocalPicPathList().add(mCurrRecord.getUri());
-		//记录已经上传（内存）
-		FtpApp.getInstance().getmMapUploaded().put(mCurrRecord.getUri(),mCurrRecord.getFilename());
-		//记录已经上传（持久化）
-		FTPDBService.getInstance(mContext).saveRecord(mCurrRecord);
-		mCurrRecord = null;
-		isUploading = false;
-		upload();
+		mHandler.sendEmptyMessage(Constant.MSG_UPLOAD_COMPLETE);
 	}
+	
+	/**
+	 * 处理各种消息
+	 */
+	private Handler mHandler = new Handler(){
 
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			super.handleMessage(msg);
+			switch(msg.what)
+			{
+			case Constant.MSG_UPLOAD_START://上传--单个文件--开始
+				Log.i(TAG,"实时备份照片--开始  "+mCurrRecord.getFilename());
+				break;
+			case Constant.MSG_UPLOAD_ERROR://上传--单个文件--出错 
+				Log.i(TAG,"实时备份照片--出错 "+mCurrRecord.getFilename());
+				isUploading = false;
+				//重新压栈，重新上传
+				mCache.push(mCurrRecord);
+				upload();
+				break;
+			case Constant.MSG_UPLOAD_TRANSFERED://上传--单个文件--已经上传多少
+				
+				break;
+			case Constant.MSG_UPLOAD_COMPLETE://上传--单个文件--结束
+				Log.i(TAG,"实时备份照片--完成"+mCurrRecord.getFilename());
+				//放入待上传内存集合(已经备份过，不用再放入内存) 
+//				FtpApp.getInstance().getmLocalPicPathList().add(mCurrRecord.getUri());
+				//记录已经上传（内存）
+				FtpApp.getInstance().getmMapUploaded().put(mCurrRecord.getUri(),mCurrRecord.getFilename());
+				//记录已经上传（持久化）
+				FTPDBService.getInstance(mContext).saveRecord(mCurrRecord);
+				mCurrRecord = null;
+				isUploading = false;
+				upload();
+				break;
+			}
+		}
+		
+	};
 }
