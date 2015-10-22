@@ -1,0 +1,1 @@
+If you want to learn that download and upload files,which use FTP protocal,please check it.At the same time ,you should know how to get contacts/sms from provider database too,and so on
